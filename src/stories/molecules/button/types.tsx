@@ -24,7 +24,7 @@ export interface ButtonProps {
      * 
      * @default 'dark'
      */
-    color: 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'dark' | 'grey' | 'light';
+    color?: 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'dark' | 'grey' | 'light';
 
     /**
      * The text label to be displayed on the button.
