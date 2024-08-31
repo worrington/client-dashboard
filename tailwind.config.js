@@ -22,6 +22,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["Inter", "sans-serif"],
+      },
       colors: {
         primary: COLORS.LIME_GREEN,
         secondary: COLORS.PALE_LIME_GREEN,
