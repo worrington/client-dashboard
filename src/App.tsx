@@ -3,6 +3,7 @@ import Table from './stories/organims/Table';
 import { TableColumn } from './stories/organims/Table/types';
 import { Badge } from './stories/molecules/Badge';
 import { Button } from './stories/molecules/Button';
+import Input from './stories/molecules/Input';
 
 // Definir el tipo para los datos de cliente
 type Client = {
@@ -73,7 +74,7 @@ const App: React.FC = () => {
         }));
 
         setData(transformedData);
-        setFilteredData(transformedData); // Inicialmente, los datos filtrados son los mismos que los datos obtenidos
+        setFilteredData(transformedData);
 
       } catch (error) {
         console.log('Failed to fetch data', error);
@@ -85,7 +86,7 @@ const App: React.FC = () => {
 
   const deleteRecord = useCallback((id: number) => {
     setData(prevData => prevData.filter(client => client.id !== id));
-    setFilteredData(prevData => prevData.filter(client => client.id !== id)); // Actualiza también filteredData
+    setFilteredData(prevData => prevData.filter(client => client.id !== id));
   }, []);
 
   const handleSearch = () => {
@@ -96,31 +97,40 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center p-24">
-      <div className="mb-4 flex gap-4">
-        <input
+    <div className="flex min-h-screen flex-col p-4 md:p-24">
+      <div className="mb-4 flex gap-2 justify-end">
+        <div>
+        <Input
           type="text"
-          placeholder="Buscar..."
           value={searchTerm}
+          label='Búsqueda'
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="p-2 border border-gray-300 rounded"
-        />
-         <select
-          value={searchField}
-          onChange={(e) => setSearchField(e.target.value as keyof Client)}
-          className="p-2 border border-gray-300 rounded"
-        >
-          <option value="name">Nombre</option>
-          <option value="email">Correo</option>
-          <option value="state">Estado</option>
-          <option value="order_number">No. Pedido</option>
-          <option value="status">Estatus</option>
-        </select>
-        <Button variant='contained' color='primary' label='Buscar' onClick={handleSearch} />
+          />
+        </div>
+        <div className="flex align-end">
+          <select
+            value={searchField}
+            onChange={(e) => setSearchField(e.target.value as keyof Client)}
+            className="p-2 border border-gray-300 rounded"
+          >
+            <option value="name">Nombre</option>
+            <option value="email">Correo</option>
+            <option value="state">Estado</option>
+            <option value="order_number">No. Pedido</option>
+            <option value="status">Estatus</option>
+          </select>
+        </div>
+        <div>
+          <Button variant='contained' color='primary' label='Buscar' onClick={handleSearch} />
+        </div>
       </div>
-      <Table data={filteredData} columns={columns} />
+      <div className="items-center">
+        <div className="overflow-x-auto">
+          <Table data={filteredData} columns={columns} />
 
-      {filteredData.length < 0 && <p>No se encontraron resultados</p> }
+          {filteredData.length <= 0 && <p>No se encontraron resultados.</p> }
+        </div>
+      </div>
     </div>
   );
 };

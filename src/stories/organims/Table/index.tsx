@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+
 import TableHead from '../../molecules/TableHeader';
 import TableBody from '../../molecules/TableBody';
 import TableRow from '../../molecules/TableRow';
 import TableCell from '../../molecules/TableCell';
-import { TableProps, TableRowData } from './types';
 import Pagination from '../../molecules/Pagination';
+
+import { TableProps, TableRowData } from './types';
 
 const Table: React.FC<TableProps> = ({ data, columns }) => {
   const [sortKey, setSortKey] = useState<string | null>(null);
@@ -57,8 +59,8 @@ const Table: React.FC<TableProps> = ({ data, columns }) => {
   };
 
   return (
-    <div>
-      <table>
+    <>
+      <table className='w-full'>
         <TableHead
           columns={columns}
           onSort={handleSort}
@@ -82,7 +84,7 @@ const Table: React.FC<TableProps> = ({ data, columns }) => {
         totalPages={Math.ceil(data.length / rowsPerPage)}
         onPageChange={handlePageChange}
       />
-    </div>
+    </>
   );
 };
 

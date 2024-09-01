@@ -6,3 +6,17 @@ body {
   @apply bg-body-primary;
   @apply text-body-light;
 }
+
+input,
+select {
+  @apply p-2 border rounded;
+  @apply bg-grey;
+  @apply text-body-light;
+  border-color: #4B5563;
+}
+
+
+input:focus,
+select:focus {
+  @apply border-primary outline-none;
+}
