@@ -4,6 +4,7 @@ import { TableColumn } from './stories/organims/Table/types';
 import { Badge } from './stories/molecules/Badge';
 import { Button } from './stories/molecules/Button';
 import Input from './stories/molecules/Input';
+import Select from './stories/molecules/Select';
 
 // Definir el tipo para los datos de cliente
 type Client = {
@@ -30,6 +31,14 @@ const App: React.FC = () => {
     { key: 'status', label: 'Estatus', sortable: true, filterable: true },
     { key: 'actions', label: 'Acciones' }
   ];
+
+  const options = [
+    { value: 'name', label: 'Nombre' },
+    { value: 'email', label: 'Correo' },
+    { value: 'state', label: 'Estado' },
+    { value: 'order_number', label: 'No. Pedido' },
+    { value: 'status', label: 'Estatus' },
+  ]
 
   const getBadgeColor = (status: string) => {
     switch (status) {
@@ -98,29 +107,19 @@ const App: React.FC = () => {
 
   return (
     <div className="flex min-h-screen flex-col p-4 md:p-24">
-      <div className="mb-4 flex gap-2 justify-end">
-        <div>
-        <Input
-          type="text"
-          value={searchTerm}
-          label='Búsqueda'
-          onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </div>
-        <div className="flex align-end">
-          <select
-            value={searchField}
-            onChange={(e) => setSearchField(e.target.value as keyof Client)}
-            className="p-2 border border-gray-300 rounded"
-          >
-            <option value="name">Nombre</option>
-            <option value="email">Correo</option>
-            <option value="state">Estado</option>
-            <option value="order_number">No. Pedido</option>
-            <option value="status">Estatus</option>
-          </select>
-        </div>
-        <div>
+      <div className="mb-4 flex items-end justify-end gap-2">
+          <Input
+            type="text"
+            value={searchTerm}
+            label='Búsqueda'
+            onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          <div className="flex align-items-end gap-2">
+            <Select
+              value={searchField}
+              onChange={(e) => setSearchField(e.target.value as keyof Client)}
+              options={options}
+            />
           <Button variant='contained' color='primary' label='Buscar' onClick={handleSearch} />
         </div>
       </div>

@@ -13,6 +13,7 @@ select {
   @apply bg-grey;
   @apply text-body-light;
   border-color: #4B5563;
+  height: 42px;
 }
 
 
