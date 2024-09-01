@@ -37,7 +37,7 @@ module.exports = {
         body: {
           primary: COLORS.MIDNIGHT_BLUE,
           secondary: COLORS.CHARCOAL_GRAY,
-          light: COLORS.LIGHT_GRAY_BLUE,
+          light: COLORS.COOL_GRAY,
         },
       },
     },

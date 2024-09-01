@@ -4,6 +4,7 @@ import TableBody from '../../molecules/TableBody';
 import TableRow from '../../molecules/TableRow';
 import TableCell from '../../molecules/TableCell';
 import { TableProps, TableRowData } from './types';
+import Pagination from '../../molecules/Pagination';
 
 const Table: React.FC<TableProps> = ({ data, columns }) => {
   const [sortKey, setSortKey] = useState<string | null>(null);
@@ -51,6 +52,10 @@ const Table: React.FC<TableProps> = ({ data, columns }) => {
     setCurrentPage(1);
   };
 
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
   return (
     <div>
       <table>
@@ -71,8 +76,12 @@ const Table: React.FC<TableProps> = ({ data, columns }) => {
           ))}
         </TableBody>
       </table>
-
-      {/*TODO: Pagination Controls */}
+      
+      <Pagination
+        currentPage={currentPage}
+        totalPages={Math.ceil(data.length / rowsPerPage)}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 };

@@ -43,4 +43,6 @@ export interface ButtonProps {
      * This allows you to define what happens when the user interacts with the button.
      */
     onClick?: () => void;
+
+    disabled?: boolean;
 }

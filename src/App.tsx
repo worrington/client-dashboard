@@ -50,7 +50,7 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="p-4">
+    <div className="flex min-h-screen flex-col items-center justify-between p-24">
       <Table data={data} columns={columns} />
     </div>
   );
