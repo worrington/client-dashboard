@@ -1,7 +1,9 @@
 // App.tsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Table from './stories/organims/Table';
 import {TableColumn } from './stories/organims/Table/types';
+import { Badge } from './stories/molecules/Badge';
+import { Button } from './stories/molecules/Button';
 
 // Definir el tipo para los datos de cliente
 type Client = {
@@ -27,6 +29,23 @@ const App: React.FC = () => {
     { key: 'actions', label: 'Acciones'}
   ];
 
+  const getBadgeColor = (status: string) => {
+    switch (status) {
+      case 'Enviado':
+        return 'success';
+      case 'Pendiente':
+        return 'warning';
+      case 'Cancelado':
+        return 'danger';
+      default:
+        return 'primary';
+    }
+  };
+
+  const deleteRecord = useCallback((id: number) => {
+    setData(prevData => prevData.filter(client => client.id !== id));
+  }, [setData]);
+
   // Data fetching
   useEffect(() => {
     const fetchData = async () => {
@@ -39,7 +58,24 @@ const App: React.FC = () => {
 
         const result = await response.json();
 
-        setData(result);
+        const transformedData = result.map((client: Client) => ({
+          ...client,
+          status: <div className='flex'>
+            <Badge
+              label={client.status}
+              color={getBadgeColor(client.status)}
+              className="w-full text-center"
+            />
+          </div>,
+          actions: (
+            <div className='flex'>
+              <Button variant='text' color='light' label='View' />
+              <Button variant='text' color='light' label='Delete' onClick={() => deleteRecord(client.id)}/>
+            </div>
+          ),
+        }));
+
+        setData(transformedData);
 
       } catch (error) {
         console.log('Failed to fetch data', error);

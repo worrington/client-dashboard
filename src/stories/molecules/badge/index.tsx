@@ -6,6 +6,7 @@ import { classMap } from '../../constans';
 export const Badge: React.FC<BadgeProps> = ({
   label,
   color = 'primary',
+  className,
   ...props
 }) => {
   // Retrieve the classes for the given color
@@ -16,7 +17,8 @@ export const Badge: React.FC<BadgeProps> = ({
     'rounded',
     'px-4',
     'py-1',
-    getClasses
+    getClasses,
+    className
   );
 
   return (

@@ -11,4 +11,6 @@ export interface BadgeProps {
      * This is a required property and defines the main content of the button.
      */
     label: string;
+
+    className?: string;
 }

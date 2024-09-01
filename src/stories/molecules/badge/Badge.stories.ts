@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Badge } from '.'; // Ensure this path is correct
+import { Badge } from '.';
 
 // Default configuration for the stories
 const meta = {
