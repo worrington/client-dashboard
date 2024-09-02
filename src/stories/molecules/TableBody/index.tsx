@@ -8,7 +8,7 @@ import { TableBodyProps } from "./types";
  */
 const TableBody: React.FC<TableBodyProps> = ({ children }) => {
   return (
-    <tbody className="divide-y">
+    <tbody>
       {children}
     </tbody>
   );

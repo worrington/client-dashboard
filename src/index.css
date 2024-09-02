@@ -16,8 +16,12 @@ select {
   height: 42px;
 }
 
-
 input:focus,
 select:focus {
   @apply border-primary outline-none;
+}
+
+h1 {
+  font-size: 2rem;
+  @apply text-light;
 }

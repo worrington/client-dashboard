@@ -3,12 +3,12 @@ import { TableHeadProps } from './types';
 
 const TableHead: React.FC<TableHeadProps> = ({ columns, onSort, onFilterChange }) => {
   return (
-    <thead>
+    <thead className="border border-grey bg-grey">
       <tr>
         {columns.map(column => (
           <th
             key={column.key}
-            className="px-6 py-3 text-left tracking-wider cursor-pointer"
+            className="px-6 py-3 text-left font-normal tracking-wider cursor-pointer"
             onClick={() => column.sortable && onSort(column.key)}
           >
             {column.label}

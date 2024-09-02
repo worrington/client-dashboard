@@ -21,7 +21,7 @@ const Pagination: React.FC<PaginationProps> = ({
   };
 
   return (
-    <div className="flex items-center space-x-2">
+    <div className="text-center space-x-2">
       <Button
         label="<"
         onClick={() => handlePageChange(currentPage - 1)}

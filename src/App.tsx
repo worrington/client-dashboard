@@ -107,24 +107,27 @@ const App: React.FC = () => {
 
   return (
     <div className="flex min-h-screen flex-col p-4 md:p-24">
-      <div className="mb-4 flex items-end justify-end gap-2">
+      <div className="mb-8 sm:flex items-end justify-between">
+        <h1>Clientes</h1>
+        <div className="sm:flex items-end gap-2">
           <Input
             type="text"
             value={searchTerm}
             label='Búsqueda'
             onChange={(e) => setSearchTerm(e.target.value)}
             />
-          <div className="flex align-items-end gap-2">
+          <div className="flex align-items-end gap-2 mt-2">
             <Select
               value={searchField}
               onChange={(e) => setSearchField(e.target.value as keyof Client)}
               options={options}
             />
-          <Button variant='contained' color='primary' label='Buscar' onClick={handleSearch} />
+            <Button variant='contained' color='primary' label='Buscar' onClick={handleSearch} />
+          </div>
         </div>
       </div>
       <div className="items-center">
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto rounded-lg">
           <Table data={filteredData} columns={columns} />
 
           {filteredData.length <= 0 && <p>No se encontraron resultados.</p> }

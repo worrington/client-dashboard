@@ -21,6 +21,9 @@ module.exports = {
     "./.storybook/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
+    borderWidth: {
+      DEFAULT: '1px',
+    },
     extend: {
       fontFamily: {
         sans: ["Inter", "sans-serif"],

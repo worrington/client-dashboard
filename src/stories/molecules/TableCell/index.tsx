@@ -9,9 +9,9 @@ import { TableCellProps } from './types';
  * tag of a table.
  * 
  */
-const TableCell: React.FC<TableCellProps> = ({ children }) => {
+const TableCell: React.FC<TableCellProps> = ({ children, colSpan, ...props }) => {
   return (
-    <td className="px-6 py-4">
+    <td className="px-6 py-4" colSpan={colSpan} {...props}>
       {children}
     </td>
   );

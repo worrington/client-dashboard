@@ -76,14 +76,20 @@ const Table: React.FC<TableProps> = ({ data, columns }) => {
               ))}
             </TableRow>
           ))}
+          
         </TableBody>
+        <tbody className="border border-grey">
+          <TableCell colSpan={columns.length}>
+            <Pagination
+              currentPage={currentPage}
+              totalPages={Math.ceil(data.length / rowsPerPage)}
+              onPageChange={handlePageChange}
+            />
+            </TableCell>
+        </tbody>
       </table>
       
-      <Pagination
-        currentPage={currentPage}
-        totalPages={Math.ceil(data.length / rowsPerPage)}
-        onPageChange={handlePageChange}
-      />
+      
     </>
   );
 };

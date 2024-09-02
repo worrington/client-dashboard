@@ -1,9 +1,9 @@
 import React from 'react';
 import { TableRowProps } from './types';
 
-const TableRow: React.FC<TableRowProps> = ({ children }) => {
+const TableRow: React.FC<TableRowProps> = ({ children, ...props }) => {
   return (
-    <tr className="">
+    <tr className="border border-grey" {...props}>
       {children}
     </tr>
   );
