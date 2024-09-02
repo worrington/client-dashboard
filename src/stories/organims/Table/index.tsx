@@ -125,7 +125,7 @@ const Table: React.FC<TableProps> = ({ data, columns }) => {
           ))}
         </TableBody>
         <tfoot>
-          <TableRow>
+          <TableRow className='border-none'>
             <TableCell colSpan={columns.length}>
               <Pagination
                 currentPage={currentPage}

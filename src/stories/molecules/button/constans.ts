@@ -1,12 +1,12 @@
 export const buttonClassMap = {
     primary: {
-      contained: 'bg-primary text-body-primary',
+      contained: 'bg-primary text-body-primary hover:bg-grey hover:text-body-light',
       outlined: 'border border-2 border-primary text-primary',
       text: 'bg-transparent text-primary',
     },
     secondary: {
       contained: 'bg-secondary text-body-primary',
-      outlined: 'border border-2 border-secondary text-secondary',
+      outlined: 'border border-2 border-secondary text-secondary hover:bg-primary hover:text-body-primary',
       text: 'bg-transparent text-secondary',
     },
     success: {
@@ -32,11 +32,11 @@ export const buttonClassMap = {
     grey: {
       contained: 'bg-grey text-body-light',
       outlined: 'border border-2 border-grey text-grey',
-      text: 'bg-transparent text-grey',
+      text: 'bg-transparent text-grey hover:bg-light',
     },
     light: {
       contained: 'bg-light text-body-primary',
       outlined: 'border border-2 border-light text-light',
-      text: 'bg-transparent text-light',
+      text: 'bg-transparent text-light hover:bg-grey',
     },
 };

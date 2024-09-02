@@ -15,4 +15,6 @@ export interface IconProps {
   height?: number;
   /** The color of the icon. It corresponds to a Tailwind CSS text color class (e.g., text-primary). Defaults to primary. */
   color?: string;
+  /** Defines the type of the icon */
+  variant?: "outline" | "solid";
 }

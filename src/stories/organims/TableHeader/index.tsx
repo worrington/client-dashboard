@@ -71,7 +71,7 @@ const TableHead: React.FC<TableHeadProps> = ({
               {column.filterable && column.options && column.options.length > 0 && (
                 <div className="relative">
                   <Button
-                    icon={<Icon name='FunnelIcon' color='light'/>}
+                    icon={<Icon name='FunnelIcon' color='body-light' variant='solid'/>}
                     label=''
                     onClick={(e) => toggleFilterVisibility(column.key, e)}
                   />

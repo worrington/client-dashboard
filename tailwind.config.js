@@ -15,7 +15,9 @@ const COLORS = {
 };
 
 /** @type {import('tailwindcss').Config} */
+
 module.exports = {
+  darkMode: ["class"],
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
     "./.storybook/**/*.{js,jsx,ts,tsx}",
@@ -27,7 +29,7 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ["Inter", "sans-serif"],
-        'monument': ['Monument Extended', 'sans-serif'],
+        monument: ['MonumentExtended', 'sans-serif'],
       },
       colors: {
         primary: COLORS.LIME_GREEN,

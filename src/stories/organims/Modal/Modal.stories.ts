@@ -17,6 +17,7 @@ const meta: Meta<typeof Modal> = {
   args: {
     title: 'Modal Title',
     children: 'This is the content of the modal.',
+    isOpen: true,
   },
 };
 

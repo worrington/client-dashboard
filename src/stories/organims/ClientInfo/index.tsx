@@ -39,13 +39,13 @@ const ClientInfo: React.FC<ClientInfoProps> = ({clientData}) => {
         <div>
           <p className="font-bold text-lg">Cliente</p>
           <p className="text-base">{clientData.name}</p>
-          <p className="font-bold text-lg">Correo</p>
+          <p className="font-bold text-lg mt-2">Correo</p>
           <p className="text-base">{clientData.email}</p>
         </div>
         <div>
           <p className="font-bold text-lg">No. de orden</p>
           <p className="text-base">{clientData.order_number}</p>
-          <p className="font-bold text-lg">Enviado el</p>
+          <p className="font-bold text-lg mt-2">Enviado el</p>
           <p className="text-base">{getRandomDateThisYear()}</p>
         </div>
         <div>

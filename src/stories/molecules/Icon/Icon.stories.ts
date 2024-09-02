@@ -20,6 +20,10 @@ const meta = {
       control: 'select',
       options: ['primary', 'secondary', 'success', 'warning', 'danger', 'dark', 'light', 'grey'],
     },
+    variant: {
+      control: 'select',
+      options: ["outline", "solid"],
+    },
     width: {
       control: 'number',
     },

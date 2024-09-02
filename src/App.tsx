@@ -10,6 +10,10 @@ import Icon from './stories/molecules/Icon';
 import Modal from './stories/organims/Modal';
 import ClientInfo from './stories/organims/ClientInfo';
 import Logo from './Logo';
+import clientDatajson from './data/clientes.json';
+
+// Usa clientData en tu componente
+console.log(clientDatajson);
 
 // Define the type for client data
 type Client = {
@@ -42,7 +46,8 @@ const App: React.FC = () => {
   const [searchField, setSearchField] = useState<keyof Client>('name');
   const [filteredData, setFilteredData] = useState<Client[]>([]);
   const [clientData, setClientData] = useState<Client>();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isSearch, setIsSearch] = useState<boolean>(false);
   
 
   // Function to delete a record
@@ -51,12 +56,21 @@ const App: React.FC = () => {
     setFilteredData(prevData => prevData.filter(client => client.id !== id));
   }, []);
   
-   // Function to handle search
+  // Function to handle search
   const handleSearch = () => {
     const result = data.filter(client =>
       client[searchField]?.toString().toLowerCase().includes(searchTerm.toLowerCase())
     );
+
+    setIsSearch(true);
     setFilteredData(result);
+  };
+
+  // Function to handle clean search
+  const handleCleanSearch = () => {
+    setIsSearch(false);
+    setFilteredData(data);
+    setSearchTerm('');
   };
 
   // Function to handle filtering by status
@@ -71,7 +85,7 @@ const App: React.FC = () => {
   // Function to open the modal
   const handleOpenModal = (clientData: Client) => {
     setClientData(clientData);
-    setIsModalOpen(true)
+    setIsModalOpen(true);
   };
 
   // Function to close the modal
@@ -105,13 +119,7 @@ const App: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('/clientes.json');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const result = await response.json();
-
-        const transformedData = result.map((client: Client) => ({
+        const transformedData = clientDatajson.map((client) => ({
           ...client,
           status: (
             <div className='flex'>
@@ -133,7 +141,7 @@ const App: React.FC = () => {
                 icon={
                   <Icon name={'EyeIcon'} color='light'/>
                 }
-                onClick={() => handleOpenModal(client)}
+                onClick={() => handleOpenModal(client as Client)}
               />
               <Button
                 variant='text'
@@ -149,8 +157,8 @@ const App: React.FC = () => {
           ),
         }));
 
-        setData(transformedData);
-        setFilteredData(transformedData);
+        setData(transformedData as unknown as Client[]);
+        setFilteredData(transformedData as unknown as Client[]);
 
       } catch (error) {
         console.log('Failed to fetch data', error);
@@ -160,16 +168,18 @@ const App: React.FC = () => {
     fetchData();
   }, []);
 
+  console.log(filteredData);
+
   return (
     <>
      <Header logo={Logo} />
-      <div className="flex min-h-screen flex-col p-4 md:p-24">
+      <div className="flex min-h-screen flex-col p-4 md:px-24 md:py-8">
         <div className="mb-8 sm:flex items-end justify-between">
           <h1>Clientes</h1>
           <div className="sm:flex items-end gap-2">
             <Input
               type="text"
-              value={searchTerm}
+              value={searchTerm || ""}
               label='Búsqueda'
               onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -179,12 +189,24 @@ const App: React.FC = () => {
                 onChange={(e) => setSearchField(e.target.value as keyof Client)}
                 options={options}
               />
-              <Button variant='contained' color='primary' label='Buscar' onClick={handleSearch} />
+              {isSearch
+              ? <Button
+                variant='contained'
+                color='primary'
+                label='Limpiar'
+                onClick={handleCleanSearch}
+              />
+              : <Button
+                variant='contained'
+                color='primary'
+                label='Buscar'
+                onClick={handleSearch}
+              />}
             </div>
           </div>
         </div>
         <div className="items-center">
-          <div className="overflow-x-auto rounded-lg">
+          <div className="overflow-x-auto border rounded-lg border-grey">
             <Table data={filteredData} columns={columns} />
 
             {filteredData.length <= 0 && <p>No se encontraron resultados.</p> }
@@ -194,10 +216,9 @@ const App: React.FC = () => {
             <Modal
               title="Detalles de la orden"
               onClose={handleCloseModal}
+              isOpen={isModalOpen}
             >
               <ClientInfo clientData={clientData} />
-
-              
             </Modal>
           )}
         </div>
