@@ -2,7 +2,7 @@
   "name": "client-dashboard-challenge",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://worrington.github.io/client-dashboard",
+  "homepage": "https://worrington.github.io/client-dashboard/",
   "dependencies": {
     "@heroicons/react": "^2.1.5",
     "@testing-library/user-event": "^13.5.0",
