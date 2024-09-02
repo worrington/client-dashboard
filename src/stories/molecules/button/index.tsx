@@ -13,6 +13,8 @@ export const Button: React.FC<ButtonProps> = ({
   label,
   color = 'primary',
   variant = 'text',
+  icon: Icon,
+  className,
   ...props
 }) => {
   // Retrieve the classes for the given color and variant from the buttonClassMap
@@ -23,16 +25,17 @@ export const Button: React.FC<ButtonProps> = ({
     'rounded',
     'px-4',
     'py-1',
-    getClasses
+    getClasses,
   );
 
   return (
     <button
       type="button"
-      className={baseClasses}
+      className={className ?? baseClasses}
       {...props}
     >
-      {label}
+      {Icon && Icon}
+      <span>{label}</span>
     </button>
   );
 };

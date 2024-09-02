@@ -5,6 +5,9 @@ import { Badge } from './stories/molecules/Badge';
 import { Button } from './stories/molecules/Button';
 import Input from './stories/molecules/Input';
 import Select from './stories/molecules/Select';
+import { Header } from './stories/Header';
+import Logo from './Logo';
+import Icon from './stories/molecules/Icon';
 
 // Definir el tipo para los datos de cliente
 type Client = {
@@ -76,8 +79,25 @@ const App: React.FC = () => {
           ),
           actions: (
             <div className='flex'>
-              <Button variant='text' color='light' label='View' />
-              <Button variant='text' color='light' label='Delete' onClick={() => deleteRecord(client.id)} />
+              <Button
+                variant='text'
+                color='light'
+                label=''
+                className='p-1'
+                icon={
+                  <Icon name={'EyeIcon'} color='light'/>
+                }
+              />
+              <Button
+                variant='text'
+                color='light'
+                label=''
+                className='p-1'
+                icon={
+                  <Icon name={'TrashIcon'} color='light'/>
+                }
+                onClick={() => deleteRecord(client.id)}
+              />
             </div>
           ),
         }));
@@ -106,6 +126,10 @@ const App: React.FC = () => {
   };
 
   return (
+    <>
+     <Header logo={Logo}
+       
+      />
     <div className="flex min-h-screen flex-col p-4 md:p-24">
       <div className="mb-8 sm:flex items-end justify-between">
         <h1>Clientes</h1>
@@ -134,6 +158,7 @@ const App: React.FC = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

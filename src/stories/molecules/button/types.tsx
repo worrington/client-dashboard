@@ -1,3 +1,5 @@
+import React from "react";
+
 /**
  * Button properties interface, defining the expected props for the Button component.
  * This interface includes options for button styling, label text, and an optional icon.
@@ -34,9 +36,8 @@ export interface ButtonProps {
 
     /**
      * An optional icon to be displayed alongside the label inside the button.
-     * The icon can be a string representing a class name for an icon library or an image URL.
      */
-    icon?: string;
+    icon?: React.ReactNode;
 
     /**
      * An optional click handler function, triggered when the button is clicked.
@@ -45,4 +46,6 @@ export interface ButtonProps {
     onClick?: () => void;
 
     disabled?: boolean;
+
+    className?: string;
 }
