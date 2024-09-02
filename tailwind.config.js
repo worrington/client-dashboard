@@ -27,6 +27,7 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ["Inter", "sans-serif"],
+        'monument': ['Monument Extended', 'sans-serif'],
       },
       colors: {
         primary: COLORS.LIME_GREEN,

@@ -8,6 +8,8 @@ import Select from './stories/molecules/Select';
 import { Header } from './stories/Header';
 import Logo from './Logo';
 import Icon from './stories/molecules/Icon';
+import Modal from './stories/organims/Modal';
+import ClientInfo from './stories/organims/ClientInfo';
 
 // Definir el tipo para los datos de cliente
 type Client = {
@@ -17,31 +19,67 @@ type Client = {
   state: string;
   order_number: string;
   status: string;
+  statusLabel: string;
 };
+
+const options = [
+  { value: 'name', label: 'Nombre' },
+  { value: 'email', label: 'Correo' },
+  { value: 'state', label: 'Estado' },
+  { value: 'order_number', label: 'No. Pedido' },
+]
+
+const filters = [
+  { value: 'Enviado', label: 'Enviado' },
+  { value: 'Pendiente', label: 'Pendiente' },
+  { value: 'Cancelado', label: 'Cancelado' },
+  { value: 'Todos', label: 'Todos' },
+]
 
 const App: React.FC = () => {
   const [data, setData] = useState<Client[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [searchField, setSearchField] = useState<keyof Client>('name');
   const [filteredData, setFilteredData] = useState<Client[]>([]);
+  const [clientData, setClientData] = useState<Client>();
+
+  const deleteRecord = useCallback((id: number) => {
+    setData(prevData => prevData.filter(client => client.id !== id));
+    setFilteredData(prevData => prevData.filter(client => client.id !== id));
+  }, []);
+
+  const handleSearch = () => {
+    const result = data.filter(client =>
+      client[searchField]?.toString().toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredData(result);
+  };
+
+  const handleFilter = ( filterState: string) => {
+    if(filterState === "Todos") {
+      setFilteredData(data)
+    } else {
+      setFilteredData(data.filter(client => client?.statusLabel === filterState));
+    }
+  };
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenModal = (clientData: Client) => {
+    setClientData(clientData);
+    setIsModalOpen(true)
+  };
+  const handleCloseModal = () => setIsModalOpen(false);
 
   // Definir las columnas de la tabla
   const columns: TableColumn[] = [
-    { key: 'name', label: 'Nombre', sortable: true, filterable: true },
-    { key: 'email', label: 'Correo', sortable: true, filterable: true },
-    { key: 'state', label: 'Estado', sortable: true, filterable: true },
-    { key: 'order_number', label: 'No. Pedido', sortable: true, filterable: true },
-    { key: 'status', label: 'Estatus', sortable: true, filterable: true },
+    { key: 'name', label: 'Nombre', sortable: true },
+    { key: 'email', label: 'Correo', sortable: true },
+    { key: 'state', label: 'Estado', sortable: true },
+    { key: 'order_number', label: 'No. Pedido', sortable: true},
+    { key: 'status', label: 'Estatus', filterable: true, options: filters, onFilter: handleFilter },
     { key: 'actions', label: 'Acciones' }
   ];
-
-  const options = [
-    { value: 'name', label: 'Nombre' },
-    { value: 'email', label: 'Correo' },
-    { value: 'state', label: 'Estado' },
-    { value: 'order_number', label: 'No. Pedido' },
-    { value: 'status', label: 'Estatus' },
-  ]
 
   const getBadgeColor = (status: string) => {
     switch (status) {
@@ -77,6 +115,7 @@ const App: React.FC = () => {
               />
             </div>
           ),
+          statusLabel: client.status,
           actions: (
             <div className='flex'>
               <Button
@@ -87,6 +126,7 @@ const App: React.FC = () => {
                 icon={
                   <Icon name={'EyeIcon'} color='light'/>
                 }
+                onClick={() => handleOpenModal(client)}
               />
               <Button
                 variant='text'
@@ -112,18 +152,6 @@ const App: React.FC = () => {
 
     fetchData();
   }, []);
-
-  const deleteRecord = useCallback((id: number) => {
-    setData(prevData => prevData.filter(client => client.id !== id));
-    setFilteredData(prevData => prevData.filter(client => client.id !== id));
-  }, []);
-
-  const handleSearch = () => {
-    const result = data.filter(client =>
-      client[searchField]?.toString().toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setFilteredData(result);
-  };
 
   return (
     <>
@@ -156,6 +184,21 @@ const App: React.FC = () => {
 
           {filteredData.length <= 0 && <p>No se encontraron resultados.</p> }
         </div>
+
+        {isModalOpen && clientData && (
+          <Modal
+            title="Detalles de la orden"
+            onClose={handleCloseModal}
+          >
+            <ClientInfo clientData={{...clientData, sent_date: "",
+  cost:  {
+    products: 1,
+    shipping: 1,
+  }}} />
+
+            
+          </Modal>
+        )}
       </div>
     </div>
     </>

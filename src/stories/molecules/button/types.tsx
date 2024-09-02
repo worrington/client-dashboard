@@ -43,7 +43,7 @@ export interface ButtonProps {
      * An optional click handler function, triggered when the button is clicked.
      * This allows you to define what happens when the user interacts with the button.
      */
-    onClick?: () => void;
+    onClick?: (e?: any) => void;
 
     disabled?: boolean;
 

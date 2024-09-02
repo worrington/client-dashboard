@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
-import TableHead from '../../molecules/TableHeader';
+import TableHead from '../TableHeader';
 import TableBody from '../../molecules/TableBody';
 import TableRow from '../../molecules/TableRow';
 import TableCell from '../../molecules/TableCell';
-import Pagination from '../../molecules/Pagination';
+import Pagination from '../Pagination';
 
 import { TableProps, TableRowData } from './types';
 
@@ -65,6 +65,8 @@ const Table: React.FC<TableProps> = ({ data, columns }) => {
           columns={columns}
           onSort={handleSort}
           onFilterChange={handleFilterChange}
+          sortKey={sortKey}
+          sortOrder={sortOrder}
         />
         <TableBody>
           {displayData.map((row, index) => (
