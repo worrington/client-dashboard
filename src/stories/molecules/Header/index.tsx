@@ -1,12 +1,17 @@
 import React from 'react';
 
 import './header.css';
-import Icon from './molecules/Icon';
+import Icon from '../Icon';
 
 // Define the type for the `logo` prop
 interface HeaderProps {
+  /** A React component that represents the logo. This component is rendered within the header. */
   logo: React.ComponentType;
 }
+
+/**
+ * The Header component displays a header with a logo and a user icon.
+ */
 export const Header: React.FC<HeaderProps> = ({ logo: Logo }) => {
   return (
     <header>

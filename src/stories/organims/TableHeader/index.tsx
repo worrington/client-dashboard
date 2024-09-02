@@ -8,16 +8,30 @@ interface FilterOption {
   label: string;
 }
 
+/**
+ * TableHead component for displaying table headers with sorting and filtering capabilities.
+ * 
+ * @param {TableHeadProps} props - The props for the TableHead component.
+ * @param {Array<{ key: string; label: string; sortable?: boolean; filterable?: boolean; options?: FilterOption[] }>} props.columns - The column definitions.
+ * @param {(key: string) => void} props.onSort - Function to handle column sorting.
+ * @param {string | null} props.sortKey - The key of the currently sorted column.
+ * 
+ * @returns {JSX.Element} The rendered TableHead component.
+ */
 const TableHead: React.FC<TableHeadProps> = ({
   columns,
   onSort,
   sortKey,
-  sortOrder,
 }) => {
   const [filters, setFilters] = useState<{ [key: string]: string }>({});
   const [visibleFilter, setVisibleFilter] = useState<string | null>(null);
 
-  // Handle filter selection
+  /**
+   * Handle filter selection and apply the filter.
+   * 
+   * @param {string} key - The key of the column to filter.
+   * @param {string} value - The filter value.
+   */
   const handleFilterChange = (key: string, value: string) => {
     setFilters(prev => ({ ...prev, [key]: value }));
     const column = columns.find(col => col.key === key);
@@ -27,7 +41,12 @@ const TableHead: React.FC<TableHeadProps> = ({
     setVisibleFilter(null);
   };
 
-  // Toggle filter menu visibility
+  /**
+   * Toggle the visibility of the filter menu.
+   * 
+   * @param {string} key - The key of the column whose filter menu should be toggled.
+   * @param {MouseEvent<HTMLButtonElement>} event - The click event.
+   */
   const toggleFilterVisibility = (key: string, event: MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
     setVisibleFilter(prev => (prev === key ? null : key));
@@ -42,13 +61,11 @@ const TableHead: React.FC<TableHeadProps> = ({
             className="px-6 py-3 text-left font-normal tracking-wider cursor-pointer relative"
             onClick={() => column.sortable && onSort(column.key)}
           >
-            <div className="flex items-center space-x-2">
+            <div className="flex justify-between items-center space-x-2">
               <span>{column.label}</span>
 
               {column.sortable && sortKey === column.key && (
-                <span>
-                  <Icon name={'ChevronUpDownIcon'} color='light'/>
-                </span>
+                <Icon name='ChevronUpDownIcon' color='light'/>
               )}
 
               {column.filterable && column.options && column.options.length > 0 && (

@@ -4,7 +4,7 @@ import { Button } from '.';
 
 // Configuración predeterminada para las historias
 const meta = {
-  title: 'Example/Button',
+  title: 'Components/Molecules/Button',
   component: Button,
   parameters: {
     layout: 'centered',
@@ -48,7 +48,7 @@ export const Secondary: Story = {
 export const Custom: Story = {
   args: {
     label: 'Custom Button',
-    variant: 'contained',
-    color: 'warning',
+    variant: 'text',
+    color: 'dark',
   },
 };

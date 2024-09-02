@@ -3,7 +3,7 @@ import { Badge } from '.';
 
 // Default configuration for the stories
 const meta = {
-  title: 'Example/Badge',
+  title: 'Components/Molecules/Badge',
   component: Badge,
   parameters: {
     layout: 'centered',

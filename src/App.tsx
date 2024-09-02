@@ -3,15 +3,15 @@ import Table from './stories/organims/Table';
 import { TableColumn } from './stories/organims/Table/types';
 import { Badge } from './stories/molecules/Badge';
 import { Button } from './stories/molecules/Button';
+import { Header } from './stories/molecules/Header';
 import Input from './stories/molecules/Input';
 import Select from './stories/molecules/Select';
-import { Header } from './stories/Header';
-import Logo from './Logo';
 import Icon from './stories/molecules/Icon';
 import Modal from './stories/organims/Modal';
 import ClientInfo from './stories/organims/ClientInfo';
+import Logo from './Logo';
 
-// Definir el tipo para los datos de cliente
+// Define the type for client data
 type Client = {
   id: number;
   name: string;
@@ -42,12 +42,16 @@ const App: React.FC = () => {
   const [searchField, setSearchField] = useState<keyof Client>('name');
   const [filteredData, setFilteredData] = useState<Client[]>([]);
   const [clientData, setClientData] = useState<Client>();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  
 
+  // Function to delete a record
   const deleteRecord = useCallback((id: number) => {
     setData(prevData => prevData.filter(client => client.id !== id));
     setFilteredData(prevData => prevData.filter(client => client.id !== id));
   }, []);
-
+  
+   // Function to handle search
   const handleSearch = () => {
     const result = data.filter(client =>
       client[searchField]?.toString().toLowerCase().includes(searchTerm.toLowerCase())
@@ -55,6 +59,7 @@ const App: React.FC = () => {
     setFilteredData(result);
   };
 
+  // Function to handle filtering by status
   const handleFilter = ( filterState: string) => {
     if(filterState === "Todos") {
       setFilteredData(data)
@@ -63,15 +68,16 @@ const App: React.FC = () => {
     }
   };
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
+  // Function to open the modal
   const handleOpenModal = (clientData: Client) => {
     setClientData(clientData);
     setIsModalOpen(true)
   };
-  const handleCloseModal = () => setIsModalOpen(false);
 
-  // Definir las columnas de la tabla
+  // Function to close the modal
+  const handleCloseModal = () => setIsModalOpen(false);
+  
+  // Define table columns
   const columns: TableColumn[] = [
     { key: 'name', label: 'Nombre', sortable: true },
     { key: 'email', label: 'Correo', sortable: true },
@@ -81,6 +87,7 @@ const App: React.FC = () => {
     { key: 'actions', label: 'Acciones' }
   ];
 
+   // Function to get badge color based on status
   const getBadgeColor = (status: string) => {
     switch (status) {
       case 'Enviado':
@@ -155,52 +162,46 @@ const App: React.FC = () => {
 
   return (
     <>
-     <Header logo={Logo}
-       
-      />
-    <div className="flex min-h-screen flex-col p-4 md:p-24">
-      <div className="mb-8 sm:flex items-end justify-between">
-        <h1>Clientes</h1>
-        <div className="sm:flex items-end gap-2">
-          <Input
-            type="text"
-            value={searchTerm}
-            label='Búsqueda'
-            onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          <div className="flex align-items-end gap-2 mt-2">
-            <Select
-              value={searchField}
-              onChange={(e) => setSearchField(e.target.value as keyof Client)}
-              options={options}
-            />
-            <Button variant='contained' color='primary' label='Buscar' onClick={handleSearch} />
+     <Header logo={Logo} />
+      <div className="flex min-h-screen flex-col p-4 md:p-24">
+        <div className="mb-8 sm:flex items-end justify-between">
+          <h1>Clientes</h1>
+          <div className="sm:flex items-end gap-2">
+            <Input
+              type="text"
+              value={searchTerm}
+              label='Búsqueda'
+              onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            <div className="flex align-items-end gap-2 mt-2">
+              <Select
+                value={searchField}
+                onChange={(e) => setSearchField(e.target.value as keyof Client)}
+                options={options}
+              />
+              <Button variant='contained' color='primary' label='Buscar' onClick={handleSearch} />
+            </div>
           </div>
         </div>
-      </div>
-      <div className="items-center">
-        <div className="overflow-x-auto rounded-lg">
-          <Table data={filteredData} columns={columns} />
+        <div className="items-center">
+          <div className="overflow-x-auto rounded-lg">
+            <Table data={filteredData} columns={columns} />
 
-          {filteredData.length <= 0 && <p>No se encontraron resultados.</p> }
+            {filteredData.length <= 0 && <p>No se encontraron resultados.</p> }
+          </div>
+
+          {isModalOpen && clientData && (
+            <Modal
+              title="Detalles de la orden"
+              onClose={handleCloseModal}
+            >
+              <ClientInfo clientData={clientData} />
+
+              
+            </Modal>
+          )}
         </div>
-
-        {isModalOpen && clientData && (
-          <Modal
-            title="Detalles de la orden"
-            onClose={handleCloseModal}
-          >
-            <ClientInfo clientData={{...clientData, sent_date: "",
-  cost:  {
-    products: 1,
-    shipping: 1,
-  }}} />
-
-            
-          </Modal>
-        )}
       </div>
-    </div>
     </>
   );
 };
