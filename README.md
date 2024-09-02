@@ -86,7 +86,3 @@ Testing is set up with [Jest](https://jestjs.io/) and [Testing Library](https://
 ## 📜 License
 
 This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
-
----
-
-Feel free to adjust the details and sections as necessary for your specific project needs. If you have any images or specific screenshots, don't forget to include them and adjust paths accordingly.
